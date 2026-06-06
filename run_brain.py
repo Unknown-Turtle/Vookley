@@ -9,18 +9,20 @@ from tribev2.demo_utils import get_audio_and_text_events
 
 
 def main():
-    # 1. Setup Hardware (Force CPU to bypass Meta's Nvidia bug)
-    device = 'cpu'
+    # 1. Setup Hardware (auto-detect CUDA, fall back to CPU)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Hardware routing active: {device}")
 
     # 2. Load the Meta TRIBE v2 model
+    # Note: audio_feature.device must match top-level device, otherwise
+    # neuralset's HuggingFaceMixin tries CUDA on CPU-only builds and crashes.
     print("Loading model weights...")
     model = TribeModel.from_pretrained(
         "facebook/tribev2",
         device=device,
         cache_folder="./cache",
         config_update={
-            "data.audio_feature.device": "cpu",
+            "data.audio_feature.device": device,
         },
     )
 
