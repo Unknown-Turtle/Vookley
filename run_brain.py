@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
+from huggingface_hub import snapshot_download
 from tribev2 import TribeModel
 from tribev2.demo_utils import get_audio_and_text_events
 
@@ -14,11 +15,19 @@ def main():
     print(f"Hardware routing active: {device}")
 
     # 2. Load the Meta TRIBE v2 model
-    # Note: audio_feature.device must match top-level device, otherwise
+    # Note 1: audio_feature.device must match top-level device, otherwise
     # neuralset's HuggingFaceMixin tries CUDA on CPU-only builds and crashes.
+    # Note 2: pre-download via snapshot_download to avoid a Windows bug in
+    # tribev2's from_pretrained, which does Path("facebook/tribev2") and
+    # then str() — producing "facebook\tribev2" on Windows, which fails
+    # HuggingFace's repo-id validator.
+    print("Resolving model snapshot...")
+    model_dir = snapshot_download("facebook/tribev2")
+    print(f"Model snapshot at: {model_dir}")
+
     print("Loading model weights...")
     model = TribeModel.from_pretrained(
-        "facebook/tribev2",
+        model_dir,
         device=device,
         cache_folder="./cache",
         config_update={
