@@ -1,5 +1,13 @@
+import pathlib
 import pickle
+import platform
 from pathlib import Path
+
+# Windows compat shim: Meta's config.yaml was saved on Linux and pickles
+# PosixPath instances inside. Python on Windows refuses to instantiate
+# PosixPath, so alias it to WindowsPath before TRIBE loads the YAML.
+if platform.system() == "Windows":
+    pathlib.PosixPath = pathlib.WindowsPath
 
 import numpy as np
 import pandas as pd
