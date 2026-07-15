@@ -9,7 +9,8 @@ neuro_cache/
 __pycache__/
 *.pyc
 
-# generated analysis artifacts (large / reproducible)
+# datasets + generated analysis artifacts (large / reproducible)
+data/
 outputs/
 
 # local scratch
