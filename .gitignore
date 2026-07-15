@@ -1,6 +1,18 @@
+# virtualenvs
 venv/
 .venv/
-notes.txt
-cache/
+venv_neuro/
 
+# caches (regenerated locally; do not commit)
+cache/
+neuro_cache/
+__pycache__/
+*.pyc
+
+# generated analysis artifacts (large / reproducible)
+outputs/
+
+# local scratch
+notes.txt
 paper.pdf
+.DS_Store

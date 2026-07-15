@@ -1,3 +1,4 @@
+import argparse
 import pathlib
 import pickle
 import platform
@@ -18,6 +19,19 @@ from tribev2.demo_utils import get_audio_and_text_events
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Run TRIBE v2 on an audio file.")
+    parser.add_argument(
+        "audio_file",
+        nargs="?",
+        default="Vanished.mp3",
+        help="Path to the audio file (default: Vanished.mp3). "
+             "Output is saved to outputs/<stem>_brain.npy.",
+    )
+    args = parser.parse_args()
+    audio_file = args.audio_file
+    if not Path(audio_file).exists():
+        raise SystemExit(f"Audio file not found: {audio_file}")
+
     # 1. Setup Hardware (auto-detect CUDA, fall back to CPU)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Hardware routing active: {device}")
@@ -43,7 +57,6 @@ def main():
         },
     )
 
-    audio_file = "Vanished.mp3"
     print(f"Analysing {audio_file}...")
 
     event = {
