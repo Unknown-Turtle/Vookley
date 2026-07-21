@@ -43,13 +43,17 @@ def pick_sample(ids, n):
 
 def main():
     ap = argparse.ArgumentParser(description="Run TRIBE over a DEAM sample (audio-only).")
-    ap.add_argument("--n", type=int, default=30, help="number of clips (default 30)")
+    ap.add_argument("--n", type=int, default=150, help="number of clips (default 150)")
+    ap.add_argument("--max-id", type=int, default=2000,
+                    help="exclude ids above this. DEAM ids 1-2000 are uniform 45s "
+                         "rated excerpts; ids >2000 are full songs (different window).")
     args = ap.parse_args()
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     audio = find_audio_files()
     if not audio:
         raise SystemExit("No DEAM audio found under data/DEAM/. Unzip the dataset there first.")
+    audio = {i: p for i, p in audio.items() if i <= args.max_id}  # keep 45s excerpts only
     sample_ids = pick_sample(list(audio), args.n)
     todo = [i for i in sample_ids if not (OUT_DIR / f"{i}_brain.npy").exists()]
     print(f"DEAM audio: {len(audio)} clips | sample: {len(sample_ids)} | "

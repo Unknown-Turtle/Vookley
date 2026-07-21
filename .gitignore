@@ -13,6 +13,12 @@ __pycache__/
 data/
 outputs/
 
+# audio inputs (copyrighted / large — keep out of the repo)
+*.mp3
+*.wav
+*.m4a
+*.flac
+
 # local scratch
 notes.txt
 paper.pdf

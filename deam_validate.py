@@ -120,12 +120,14 @@ def cv_r2(X, y, k=5):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--inspect", action="store_true", help="report readiness and exit")
+    ap.add_argument("--max-id", type=int, default=2000,
+                    help="exclude ids above this (match the 45s-excerpt batch).")
     args = ap.parse_args()
 
     audio = find_audio_files()
     ann = load_static_annotations().set_index("id")
     tensors = {int(p.stem.split("_")[0]): p for p in TENSOR_DIR.glob("*_brain.npy")}
-    ready = sorted(set(tensors) & set(ann.index) & set(audio))
+    ready = sorted(i for i in (set(tensors) & set(ann.index) & set(audio)) if i <= args.max_id)
     print(f"audio={len(audio)}  annotations={len(ann)}  tensors={len(tensors)}  "
           f"usable (all three)={len(ready)}")
     if args.inspect:
