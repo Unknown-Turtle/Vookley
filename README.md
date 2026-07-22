@@ -5,11 +5,13 @@ Meta's [TRIBE](https://github.com/facebookresearch/tribev2) fMRI-encoding model
 and [Neurosynth](https://neurosynth.org/) meta-analysis.
 
 
-![DEAM validation](results/deam_validation.png)
 
 *176 human-rated songs (DEAM dataset). A cheap audio baseline explains ~36% of the
 variance in human arousal (cross-validated). Adding TRIBE's neural features adds
 nothing (R² 0.361 vs 0.351).*
+![DEAM validation](results/deam_validation.png)
+
+
 
 ## How it works
 
