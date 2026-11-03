@@ -3,23 +3,23 @@ venv/
 .venv/
 venv_neuro/
 
-# caches (regenerated locally; do not commit)
+
 cache/
 neuro_cache/
 __pycache__/
 *.pyc
 
-# datasets + generated analysis artifacts (large / reproducible)
+
 data/
 outputs/
 
-# audio inputs (copyrighted / large — keep out of the repo)
+
 *.mp3
 *.wav
 *.m4a
 *.flac
 
-# local scratch
+
 notes.txt
 paper.pdf
 .DS_Store
