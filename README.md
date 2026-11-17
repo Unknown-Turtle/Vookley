@@ -39,3 +39,9 @@ It does not. And a Neurosynth-free readout (raw activation magnitude) was flat t
 so this is not a wiring artifact. The audio baseline alone reaches cross-validated
 R² of 0.36; TRIBE adds nothing on top.
 
+## Frontend
+
+`frontend/` is a browser app built on the result above: it runs the audio
+baseline (the part that validated) entirely client-side to predict a track's
+arousal and valence over time, and includes an interactive version of the
+validation. See [`frontend/README.md`](frontend/README.md).
